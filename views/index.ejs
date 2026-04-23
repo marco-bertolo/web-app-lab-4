@@ -1,0 +1,121 @@
+<!DOCTYPE html>
+<html lang="pt">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>🍪 Lofi & Cookies Dashboard</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Fredoka:wght@400;500;600;700&family=Varela+Round&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="/style.css" />
+  <link rel="preload" href="/mindjoin_hero.riv" as="fetch" type="application/octet-stream" crossorigin="anonymous">
+  <script src="https://unpkg.com/@rive-app/canvas@2"></script>
+</head>
+<body>
+  <div class="container">
+    <header class="header">
+      <div class="cookie-jar">
+        <div class="steam steam-1"></div>
+        <div class="steam steam-2"></div>
+        <div class="steam steam-3"></div>
+        <div class="jar">
+          <div class="jar-lid"></div>
+          <div class="jar-body">
+            <span class="jar-cookie">🍪</span>
+            <span class="jar-cookie">🍪</span>
+            <span class="jar-cookie">🍪</span>
+          </div>
+        </div>
+      </div>
+      <h1>Lofi &amp; Cookies</h1>
+      <p class="subtitle">✨ um servidorzinho fofo a assar bits ✨</p>
+    </header>
+
+    <section class="hero-card">
+      <div class="hero-frame">
+        <canvas id="hero-canvas" class="hero-canvas" aria-label="MindJoin hero animation"></canvas>
+        <div id="hero-loading" class="hero-loading">
+          <div class="hero-spinner"></div>
+          <span>a preparar a cena…</span>
+        </div>
+        <div class="hero-overlay">
+          <span class="hero-chip">🍪 mindjoin_hero.riv</span>
+          <span id="hero-status" class="hero-chip hero-status">a carregar…</span>
+        </div>
+        <div class="hero-hint">✨ mexe o rato · faz scroll</div>
+      </div>
+    </section>
+
+    <button id="lofiToggle" class="lofi-toggle" type="button" aria-label="Toggle lofi music">▶ play lofi</button>
+
+    <section class="grid">
+      <div class="card">
+        <div class="card-icon">🏠</div>
+        <h2>Hostname</h2>
+        <p class="card-value"><%= hostname %></p>
+      </div>
+
+      <div class="card">
+        <div class="card-icon">💻</div>
+        <h2>Plataforma</h2>
+        <p class="card-value"><%= platform %></p>
+      </div>
+
+      <div class="card">
+        <div class="card-icon">⏰</div>
+        <h2>Uptime</h2>
+        <p class="card-value"><%= uptimeMin %> min</p>
+      </div>
+
+      <div class="card card-wide">
+        <div class="card-icon">🧠</div>
+        <h2>CPU</h2>
+        <p class="card-value small"><%= cpuModel %></p>
+        <p class="card-sub"><%= cpuCount %> núcleos</p>
+      </div>
+    </section>
+
+    <section class="meters">
+      <div class="meter-card">
+        <div class="meter-header">
+          <h3>🍪 Cookies Assados (Memória em uso)</h3>
+          <span class="meter-percent"><%= cookiePercent %>%</span>
+        </div>
+        <div class="meter-bar">
+          <div class="meter-fill cookies" style="width: <%= cookiePercent %>%"></div>
+        </div>
+        <div class="meter-sub">
+          <span><%= usedMemGB %> GB usados</span>
+          <span><%= totalMemGB %> GB totais</span>
+        </div>
+      </div>
+
+      <div class="meter-card">
+        <div class="meter-header">
+          <h3><%= cookieMood.emoji %> <%= cookieMood.label %> (CPU)</h3>
+          <span class="meter-percent"><%= cpuLoad %>%</span>
+        </div>
+        <div class="meter-bar">
+          <div class="meter-fill cpu <%= cookieMood.mood %>" style="width: <%= cpuLoad %>%"></div>
+        </div>
+        <div class="mood-display <%= cookieMood.mood %>">
+          <span class="mood-emoji"><%= cookieMood.emoji %></span>
+          <span class="mood-text">
+            <% if (cookieMood.mood === 'happy') { %>
+              tá tudo fresquinho, forno a baixa temperatura~
+            <% } else { %>
+              socorro!! o forno tá a 200°C!!
+            <% } %>
+          </span>
+        </div>
+      </div>
+    </section>
+
+    <footer class="footer">
+      <p>feito com 🤎 &amp; <code>os</code> · a rodar na porta <code><%= process.env.PORT || 8080 %></code></p>
+    </footer>
+  </div>
+  <script src="/lofi.js" defer></script>
+  <script src="/rive-init.js" defer></script>
+</body>
+</html>
